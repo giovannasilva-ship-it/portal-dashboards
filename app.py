@@ -3,9 +3,16 @@ import json
 
 st.set_page_config(page_title="Painel da Aprendizagem", layout="wide")
 
-# CSS para cores do CIEE e animações interativas
+# CSS para cores do CIEE, alinhamento central e animações
 st.markdown("""
 <style>
+    a { text-decoration: none !important; }
+    
+    .header-container {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+    
     .corporate-btn {
         display: block;
         background: linear-gradient(135deg, #0056b3 0%, #0080ff 100%);
@@ -22,7 +29,7 @@ st.markdown("""
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .corporate-btn:hover {
-        transform: scale(1.03); /* Efeito de aumentar o botão */
+        transform: scale(1.03);
         box-shadow: 0 8px 15px rgba(0, 128, 255, 0.3);
         color: #ffffff !important;
     }
@@ -37,19 +44,21 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Layout do Cabeçalho com o Logótipo
-col_logo, col_titulo = st.columns([1, 4])
-
-with col_logo:
+# Bloco Centralizado: 3 colunas onde colocamos o logo no meio exato
+c1, c2, c3 = st.columns([1, 1, 1])
+with c2:
     try:
-        # O Streamlit vai procurar este ficheiro no seu GitHub
-        st.image("logo.png", width=150)
+        st.image("logo.png", use_container_width=True)
     except:
-        st.write("*(Logo CIEE)*")
+        pass
 
-with col_titulo:
-    st.title("📊 Painel da Aprendizagem")
-    st.write("Selecione um relatório abaixo para visualizar os dados atualizados.")
+# Título e descrição centralizados
+st.markdown("""
+<div class="header-container">
+    <h1 style="margin-top: 10px; color: #1e293b;">📊 Painel da Aprendizagem</h1>
+    <p style="font-size: 16px; color: #64748b;">Selecione um relatório abaixo para visualizar os dados atualizados.</p>
+</div>
+""", unsafe_allow_html=True)
 
 st.write("---")
 
