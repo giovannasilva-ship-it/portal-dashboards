@@ -1,47 +1,44 @@
 import streamlit as st
 import json
 
-st.set_page_config(page_title="Portal de Dashboards", layout="centered")
+# Atualizado para ecrã mais largo para acomodar bem as duas colunas
+st.set_page_config(page_title="Painel da Aprendizagem", layout="wide")
 
-# Injeção de CSS para estilizar os botões
 st.markdown("""
 <style>
+    a { text-decoration: none !important; }
     .corporate-btn {
         display: block;
-        background-color: #ffffff;
-        color: #0f172a !important;
-        padding: 20px;
-        margin-bottom: 15px;
+        background-color: #f8fafc;
+        color: #1e293b !important;
+        padding: 18px;
+        margin-bottom: 12px;
         text-align: center;
-        text-decoration: none;
+        text-decoration: none !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 18px;
+        font-size: 16px;
         font-weight: 600;
         border-radius: 8px;
-        border-left: 6px solid #2563eb;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border-left: 6px solid #0056b3;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         border: 1px solid #e2e8f0;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease-in-out;
     }
     .corporate-btn:hover {
-        background-color: #2563eb;
+        background-color: #0056b3;
         color: #ffffff !important;
-        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
     }
-    .support-btn {
-        border-left: 6px solid #475569;
-        font-size: 14px;
-        padding: 15px;
-    }
+    .support-btn { border-left: 6px solid #475569; background-color: #ffffff; font-size: 14px; padding: 15px; }
+    .support-btn:hover { background-color: #475569; }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("📊 Portal de Dashboards")
+st.title("📊 Painel da Aprendizagem")
 st.write("Selecione um relatório abaixo para visualizar os dados atualizados.")
 st.write("---")
 
-# Carregamento do JSON
 try:
     with open('dashboards.json', 'r', encoding='utf-8') as f:
         dashboards = json.load(f)
@@ -49,13 +46,18 @@ except FileNotFoundError:
     st.error("Ficheiro dashboards.json não encontrado.")
     dashboards = []
 
-# Geração dos botões com HTML/CSS
-for dash in dashboards:
-    html_btn = f"""<a href="{dash['url']}" target="_blank" class="corporate-btn">{dash['nome']}</a>"""
-    st.markdown(html_btn, unsafe_allow_html=True)
+# Criação das duas colunas
+col1, col2 = st.columns(2)
+
+# Distribui os primeiros 5 na coluna 1 e os restantes na coluna 2
+meio = 5
+with col1:
+    for dash in dashboards[:meio]:
+        st.markdown(f'<a href="{dash["url"]}" target="_blank" class="corporate-btn">{dash["nome"]}</a>', unsafe_allow_html=True)
+
+with col2:
+    for dash in dashboards[meio:]:
+        st.markdown(f'<a href="{dash["url"]}" target="_blank" class="corporate-btn">{dash["nome"]}</a>', unsafe_allow_html=True)
 
 st.write("---")
-
-# Botão de suporte estilizado
-suporte_btn = """<a href="https://forms.google.com/" target="_blank" class="corporate-btn support-btn">💬 Reportar Problema ou Sugestão</a>"""
-st.markdown(suporte_btn, unsafe_allow_html=True)
+st.markdown('<a href="https://forms.google.com/" target="_blank" class="corporate-btn support-btn">💬 Reportar Problema ou Sugestão</a>', unsafe_allow_html=True)
