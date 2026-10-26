@@ -3,34 +3,41 @@ import json
 
 st.set_page_config(page_title="Painel da Aprendizagem", layout="wide")
 
+# CSS para remover margens excessivas do topo e compactar o layout
 st.markdown("""
 <style>
+    /* Remove o espaçamento padrão no topo do Streamlit */
+    .block-container {
+        padding-top: 1rem !important;
+        padding-bottom: 2rem !important;
+    }
+    
     a { text-decoration: none !important; }
     
     .header-container {
         text-align: center;
-        margin-top: 10px;
-        margin-bottom: 25px;
+        margin-top: -10px;
+        margin-bottom: 15px;
     }
     
     .corporate-btn {
         display: block;
         background: linear-gradient(135deg, #0056b3 0%, #0080ff 100%);
         color: #ffffff !important;
-        padding: 16px;
-        margin-bottom: 15px;
+        padding: 15px;
+        margin-bottom: 12px;
         text-align: center;
         text-decoration: none !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 600;
-        border-radius: 12px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .corporate-btn:hover {
-        transform: scale(1.03);
-        box-shadow: 0 8px 15px rgba(0, 128, 255, 0.3);
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(0, 128, 255, 0.25);
         color: #ffffff !important;
     }
     .support-btn { 
@@ -38,25 +45,25 @@ st.markdown("""
         color: #000000 !important;
     }
     .support-btn:hover { 
-        transform: scale(1.03);
-        box-shadow: 0 8px 15px rgba(255, 152, 0, 0.3);
+        transform: scale(1.02);
+        box-shadow: 0 6px 12px rgba(255, 152, 0, 0.25);
     }
 </style>
 """, unsafe_allow_html=True)
 
-# Centralização com colunas ajustadas e largura controlada
-col_esq, col_centro, col_dir = st.columns([2, 1, 2])
+# Centralização do logo com margem superior reduzida
+col_esq, col_centro, col_dir = st.columns([2.5, 1, 2.5])
 with col_centro:
     try:
-        st.image("logo.png", width=180)
+        st.image("logo.png", width=140)
     except:
         pass
 
-# Título e descrição centralizados
+# Título e subtítulo juntos, sem espaços vazios
 st.markdown("""
 <div class="header-container">
-    <h1 style="margin: 0; color: #1e293b;">📊 Painel da Aprendizagem</h1>
-    <p style="margin-top: 8px; font-size: 16px; color: #64748b;">Selecione um relatório abaixo para visualizar os dados atualizados.</p>
+    <h2 style="margin: 0; color: #1e293b; font-weight: 700;">Painel da Aprendizagem</h2>
+    <p style="margin: 5px 0 0 0; font-size: 15px; color: #64748b;">Selecione um relatório abaixo para visualizar os dados atualizados.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -67,7 +74,7 @@ try:
     with open('dashboards.json', 'r', encoding='utf-8') as f:
         dashboards = json.load(f)
 except FileNotFoundError:
-    st.error("Ficheiro dashboards.json não encontrado.")
+    st.error("Arquivo dashboards.json não encontrado.")
     dashboards = []
 
 # Distribuição 5 e 5 em colunas
