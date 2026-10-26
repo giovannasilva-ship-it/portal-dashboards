@@ -3,13 +3,13 @@ import json
 
 st.set_page_config(page_title="Painel da Aprendizagem", layout="wide")
 
-# CSS para cores do CIEE, alinhamento central e animações
 st.markdown("""
 <style>
     a { text-decoration: none !important; }
     
     .header-container {
         text-align: center;
+        margin-top: 10px;
         margin-bottom: 25px;
     }
     
@@ -44,25 +44,25 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Bloco Centralizado: 3 colunas onde colocamos o logo no meio exato
-c1, c2, c3 = st.columns([1, 1, 1])
-with c2:
+# Centralização com colunas ajustadas e largura controlada
+col_esq, col_centro, col_dir = st.columns([2, 1, 2])
+with col_centro:
     try:
-        st.image("logo.png", use_container_width=True)
+        st.image("logo.png", width=180)
     except:
         pass
 
 # Título e descrição centralizados
 st.markdown("""
 <div class="header-container">
-    <h1 style="margin-top: 10px; color: #1e293b;">📊 Painel da Aprendizagem</h1>
-    <p style="font-size: 16px; color: #64748b;">Selecione um relatório abaixo para visualizar os dados atualizados.</p>
+    <h1 style="margin: 0; color: #1e293b;">📊 Painel da Aprendizagem</h1>
+    <p style="margin-top: 8px; font-size: 16px; color: #64748b;">Selecione um relatório abaixo para visualizar os dados atualizados.</p>
 </div>
 """, unsafe_allow_html=True)
 
 st.write("---")
 
-# Carregamento dos links
+# Carregamento dos relatórios
 try:
     with open('dashboards.json', 'r', encoding='utf-8') as f:
         dashboards = json.load(f)
@@ -70,7 +70,7 @@ except FileNotFoundError:
     st.error("Ficheiro dashboards.json não encontrado.")
     dashboards = []
 
-# Distribuição 5 e 5 nas colunas
+# Distribuição 5 e 5 em colunas
 col1, col2 = st.columns(2)
 meio = 5
 
