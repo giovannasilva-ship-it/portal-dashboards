@@ -59,7 +59,7 @@ with col_centro:
     except:
         pass
 
-# Título e subtítulo juntos, sem espaços vazios
+# Título e subtítulo centralizados
 st.markdown("""
 <div class="header-container">
     <h2 style="margin: 0; color: #1e293b; font-weight: 700;">Painel da Aprendizagem</h2>
@@ -73,13 +73,13 @@ st.write("---")
 try:
     with open('dashboards.json', 'r', encoding='utf-8') as f:
         dashboards = json.load(f)
-except FileNotFoundError:
-    st.error("Arquivo dashboards.json não encontrado.")
+except Exception as e:
+    st.error(f"Erro ao carregar dashboards.json: {e}")
     dashboards = []
 
-# Distribuição 5 e 5 em colunas
+# Distribuição balanceada automática entre as 2 colunas
 col1, col2 = st.columns(2)
-meio = 5
+meio = (len(dashboards) + 1) // 2
 
 with col1:
     for dash in dashboards[:meio]:
